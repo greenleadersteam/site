@@ -1,0 +1,32 @@
+name: Deploy site
+
+# Push-triggered. Unlike backend/frontend, this repo has no build step and no
+# `docker compose` service of its own: Caddy bind-mounts /opt/greenplan/site
+# directly (see ../ci/docker-compose.yml's `caddy` volumes and Caddyfile's
+# greenleaders.online block), so a plain checkout reset is the entire
+# deploy -- Caddy reads static files straight off disk on every request, no
+# restart needed. See ../ci/DEPLOY.md for the one-time VM/secrets setup.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {} # lets you trigger a redeploy manually from the Actions tab
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
+
+      - name: Deploy over SSH
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+        run: |
+          ssh -o StrictHostKeyChecking=accept-new "$DEPLOY_USER@$DEPLOY_HOST" '
+            set -e
+            cd /opt/greenplan/site
+            git fetch origin main
+            git reset --hard origin/main
+          '

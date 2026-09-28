@@ -1,0 +1,98 @@
+/* Colors match the frontend app's theme (frontend/src/shared/theme/{palette,theme}.ts,
+   palette "Лён и шалфей"): --app-bg = stone.1, card surface = white, accent button = sage.7. */
+:root {
+  color-scheme: light;
+  --stone-1: #fbfaf8;
+  --stone-2: #ece6dd;
+  --stone-5: #9a928a;
+  --stone-9: #2e2a27;
+  --sage-7: #5f6b55;
+  --sage-8: #48523f;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--stone-1);
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--stone-9);
+}
+
+.hero {
+  max-width: 32rem;
+  width: 100%;
+  margin: 2rem;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  background: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 1.5rem 3rem rgba(46, 42, 39, 0.12);
+}
+
+.hero-logo {
+  width: 100%;
+  max-width: 20rem;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 0.875rem;
+  box-shadow: 0 0.25rem 0.75rem rgba(46, 42, 39, 0.2);
+}
+
+.hero-title {
+  margin: 1.25rem 0 0.5rem;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--sage-8);
+}
+
+.hero-text {
+  margin: 0 0 1.75rem;
+  line-height: 1.5;
+  color: #445544;
+}
+
+.hero-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.hero-links .pure-button {
+  border-radius: 0.625rem;
+  padding: 0.625rem 1.25rem;
+  font-weight: 600;
+  border: 1px solid var(--stone-5);
+  background: #ffffff;
+  color: var(--stone-9);
+}
+
+.hero-links .pure-button:hover {
+  background: var(--stone-2);
+}
+
+.hero-links .pure-button-primary {
+  background: var(--sage-7);
+  border-color: var(--sage-7);
+  color: #ffffff;
+}
+
+.hero-links .pure-button-primary a {
+  text-decoration: none;
+}
+
+.hero-links .pure-button-primary:hover {
+  background: var(--sage-8);
+  border-color: var(--sage-8);
+}
+
+/* Stack the three links one per row on narrow/mobile screens. */
+@media (max-width: 30rem) {
+  .hero-links {
+    flex-direction: column;
+  }
+}
